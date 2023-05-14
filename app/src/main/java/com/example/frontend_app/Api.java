@@ -1,5 +1,8 @@
 package com.example.frontend_app;
 
+import java.util.List;
+import java.util.Map;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -26,6 +29,7 @@ public interface Api {
             @Query("password") String password
     );
 
-
+    @GET("get_alltasks")
+    Call<List<Task>> getAllTasks();
 }
 

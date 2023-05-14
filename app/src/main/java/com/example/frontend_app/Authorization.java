@@ -1,5 +1,6 @@
 package com.example.frontend_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -52,6 +53,13 @@ public class Authorization extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String s = response.body().string();
+                    Log.d("t", s);
+                    if(s.equals("1")) {
+                        Intent intent = new Intent(Authorization.this, MainPage.class);
+                        startActivity(intent);
+                    } else {
+                      Toast.makeText(Authorization.this, "иди нахуй", Toast.LENGTH_SHORT).show();
+                    }
                     Toast.makeText(Authorization.this, s, Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
                     throw new RuntimeException(e);

@@ -1,8 +1,13 @@
 package com.example.frontend_app;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Task {
+public class Task implements Parcelable {
     @SerializedName("id")
     int id;
 
@@ -71,5 +76,15 @@ public class Task {
     public String[] getAll(){
         String[] allInfo = {getName(), getDescription(),"" + getLevelCount(), "" +  getStatus()};
         return allInfo;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeStringArray(getAll());
     }
 }

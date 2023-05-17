@@ -19,7 +19,6 @@ import retrofit2.Response;
 
 public class Authorization extends AppCompatActivity {
 
-    private TextView authorization;
 
     EditText editTextEmail;
 
@@ -31,7 +30,6 @@ public class Authorization extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.authorization);
-        authorization = (TextView) findViewById(R.id.text);
         editTextEmail = findViewById(R.id.editTextTextEmailAddress);
         editTextPassword = findViewById(R.id.editTextTextPassword);
         button2 = findViewById(R.id.button2);
@@ -77,6 +75,15 @@ public class Authorization extends AppCompatActivity {
     public void onClick(View v){
         if (v.getId() == R.id.button2) {
             userSignIn();
+        }
+    }
+
+    public void signUp(View v){
+        try {
+            Intent intent = new Intent(Authorization.this, Register.class);
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, "ошибка", Toast.LENGTH_SHORT).show();
         }
     }
 }

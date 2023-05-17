@@ -2,6 +2,7 @@ package com.example.frontend_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,7 @@ import okhttp3.ResponseBody;
 
 public class Register extends AppCompatActivity {
 
-    private TextView lastnameF;
+    Button register, authorization;
     EditText editTextUsername;
     EditText editTextName;
     EditText editTextSurname;
@@ -29,12 +30,12 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-        lastnameF = (TextView) findViewById(R.id.register);
         editTextUsername = findViewById(R.id.username);
         editTextName = findViewById(R.id.name);
         editTextSurname = findViewById(R.id.surname);
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
+        Button register = findViewById(R.id.button3);
     }
 
     public void userSignUp() {
@@ -55,7 +56,14 @@ public class Register extends AppCompatActivity {
             public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 try {
                     String s = response.body().string();
+                    if(s.equals("1")) {
+                        Intent intent1 = new Intent(Register.this, MainPage.class);
+                        startActivity(intent1);
+                    } else {
+                        Toast.makeText(Register.this, "иди нахуй", Toast.LENGTH_SHORT).show();
+                    }
                     Toast.makeText(Register.this, s, Toast.LENGTH_SHORT).show();
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -69,11 +77,22 @@ public class Register extends AppCompatActivity {
         });
     }
 
-    public void onClick(View v){
-        if (v.getId() == R.id.button) {
-            userSignUp();
+    public void signIn(View v) {
+
+        try {
+            Intent intent = new Intent(Register.this, Authorization.class);
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, "ошибка", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void onClick(View v){
+            userSignUp();
+
+
+        }
+
 }
 
 

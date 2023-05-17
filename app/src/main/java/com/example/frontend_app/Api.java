@@ -31,5 +31,12 @@ public interface Api {
 
     @GET("get_alltasks")
     Call<List<Task>> getAllTasks();
+
+    @POST("response_task")
+    Call<ResponseBody> responseTask(
+            @Query("offer") String offer,
+            @Query("taskId") int taskId
+    );
+
 }
 

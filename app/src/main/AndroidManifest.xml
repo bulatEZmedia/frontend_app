@@ -20,11 +20,13 @@
             android:name=".MainPage"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".Authorization"
+            android:exported="false"
+            />
+        <activity
+            android:name=".Register"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

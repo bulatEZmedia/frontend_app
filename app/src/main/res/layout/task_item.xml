@@ -19,13 +19,13 @@
    android:text="уровень"
    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
+    <!--<TextView
     android:id="@+id/textView3"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="описание"
     android:textAppearance="?android:attr/textAppearanceMedium"/>
-
+-->
     <TextView
     android:id="@+id/textView4"
     android:layout_width="match_parent"

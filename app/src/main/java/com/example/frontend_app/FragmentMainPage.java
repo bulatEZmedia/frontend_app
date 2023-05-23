@@ -1,5 +1,6 @@
 package com.example.frontend_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -27,7 +28,7 @@ public class FragmentMainPage extends Fragment {
     private Task[] tasksArray;
     private TaskAdapter adapter;
 
-    Button back;
+    Button back, team, play, userProfile;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,15 +41,30 @@ public class FragmentMainPage extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_page,
                 container, false);
         taskListView = (ListView) view.findViewById(R.id.taskListView);
+        team = view.findViewById(R.id.team);
+        team.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), Team.class);
+                getActivity().startActivity(intent);
+            }
 
+        });
+
+
+        userProfile = view.findViewById(R.id.userProfile);
+        userProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), UserProfile.class);
+                getActivity().startActivity(intent);
+            }
+        });
         getAllTasks(view);
         return view;
-
-
-
     }
-
-
     private void getAllTasks(View view){
 
         Call<List<Task>> call = RetrofitClient

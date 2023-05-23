@@ -27,7 +27,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
 // Заполняем адаптер
         ((TextView) convertView.findViewById(R.id.textView)).setText(task.name);
-        ((TextView) convertView.findViewById(R.id.textView2)).setText("Уровень:" + String.valueOf(task.levelCount));
+        ((TextView) convertView.findViewById(R.id.textView2)).setText("Опыт" + String.valueOf(task.levelCount));
         ((TextView) convertView.findViewById(R.id.textView4)).setText(String.valueOf(task.location));
 
         convertView.setOnClickListener(view -> {

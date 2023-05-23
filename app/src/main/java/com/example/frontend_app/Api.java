@@ -35,8 +35,37 @@ public interface Api {
     @POST("response_task")
     Call<ResponseBody> responseTask(
             @Query("offer") String offer,
-            @Query("taskId") int taskId
+            @Query("taskId") int taskId,
+            @Query("userId") int userId
     );
 
+    @GET("get_user_profile")
+    Call<ModelUserProfile> getUserProfile(
+            @Query("user_id") int userId
+    );
+
+
+    @GET("get_allteams")
+    Call<List<ModelTeam>> getTeams();
+
+    @POST("invite_team")
+    Call<ResponseBody> inviteTeam(
+            @Query("offer") String offer,
+            @Query("teamId") int teamId,
+            @Query("userId") int userId
+    );
+
+    @GET("get_user_level")
+    Call<ResponseBody> getUserLevel(
+            @Query("user_id") int userId
+    );
+
+    @POST("create_team")
+    Call<ResponseBody> createTeam(
+                @Query("name") String name,
+                @Query("description") String description,
+                @Query("userId") int userId
+
+    );
 }
 

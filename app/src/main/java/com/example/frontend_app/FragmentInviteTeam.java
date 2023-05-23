@@ -10,7 +10,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,32 +21,27 @@ import com.google.gson.Gson;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragmentResponseTask extends Fragment {
+public class FragmentInviteTeam extends Fragment {
 
-
-    EditText editTextOffer;
-
-    Button send;
     SharedPreferences mSettings;
 
-    public static final String APP_PREFERENCES_TASK = "MY_PREFERENCES";
-    public static final String APP_PREFERENCES_TASKID = "taskId";
-    SharedPreferences mSettings1;
-
+    EditText editTextOffer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EditText editTextOffer;
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_response_task, container, false);
-        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_invite_team, container, false);
+        mSettings = this.getActivity().getSharedPreferences(APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
         int userId = 0;
         int userIdAuth = 0;
 
@@ -55,57 +49,55 @@ public class FragmentResponseTask extends Fragment {
             userId = mSettings.getInt(APP_PREFERENCES_USERID, userId);
             userIdAuth = mSettings.getInt(APP_PREFERENCES_USERID,userIdAuth);
         }
-
-        editTextOffer =(EditText) view.findViewById(R.id.offer);
-
-        Button send = view.findViewById(R.id.sendOffer);
-        int finalUserIdAuth = userIdAuth;
+        Button sendOfferInvite = view.findViewById(R.id.sendOfferInviteToTeam);
         int finalUserId = userId;
-        send.setOnClickListener(new View.OnClickListener() {
+        int finalUserIdAuth = userIdAuth;
+        sendOfferInvite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ResponseTask(view, finalUserId, finalUserIdAuth);
+                InviteToTeam(finalUserId, finalUserIdAuth);
             }
         });
+        editTextOffer = (EditText) view.findViewById(R.id.offerInviteTeam);
 
-        Button backMainPage = view.findViewById(R.id.backMainPage);
-        backMainPage.setOnClickListener(new View.OnClickListener() {
+
+        Button back = view.findViewById(R.id.backToTeam);
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), MainPage.class);
+                intent.setClass(getActivity(), Team.class);
                 getActivity().startActivity(intent);
             }
         });
 
-
         return view;
     }
-    public void ResponseTask(View view, int userId, int userIdAuth){
+
+
+
+    public void InviteToTeam(int userId, int userIdAuth){
         if (userIdAuth != 0) {
             userId = userIdAuth;
         }
+
+
         String offer = editTextOffer.getText().toString();
 
         Bundle bundle = this.getArguments();
-        Task task = new Gson().fromJson(bundle.getString("task"), Task.class);
-        SharedPreferences.Editor editor = mSettings1.edit();
-        editor.putInt(APP_PREFERENCES_TASKID, task.id);
-        editor.apply();
+        ModelTeam modelTeam = new Gson().fromJson(bundle.getString("team"), ModelTeam.class);
+
         retrofit2.Call<ResponseBody> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .responseTask(offer, task.id, userId);
+                .inviteTeam(offer, modelTeam.id, userId);
 
-        call.enqueue(new retrofit2.Callback<ResponseBody>(){
-
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s = response.body().toString();
                 Toast.makeText(getActivity(), "Отправлено", Toast.LENGTH_SHORT).show();
             }
-
-
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
@@ -113,7 +105,4 @@ public class FragmentResponseTask extends Fragment {
             }
         });
     }
-
-
-
 }

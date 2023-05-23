@@ -25,6 +25,7 @@ public class FragmentDescriptionTask extends Fragment {
 
     private ListView taskListView;
     private TaskAdapter adapter;
+    private Task task;
     TextView taskName, levelCount, descriptionTask, location;
 
 
@@ -53,10 +54,19 @@ public class FragmentDescriptionTask extends Fragment {
         response.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 FragmentResponseTask f1 = new FragmentResponseTask();
+                Bundle bundle = new Bundle();
+                Gson gson = new GsonBuilder()
+                        .setPrettyPrinting()
+                        .create();
+                String taskJson = gson.toJson(task);
+                bundle.putString("task", taskJson);
+                f1.setArguments(bundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.conteiner, f1)
                         .commit();
+
             }
         });
         return view;
@@ -67,7 +77,7 @@ public class FragmentDescriptionTask extends Fragment {
 
     public void getTask(View view) {
         Bundle bundle = this.getArguments();
-        Task task = new Gson().fromJson(bundle.getString("task"), Task.class);
+        task = new Gson().fromJson(bundle.getString("task"), Task.class);
         Log.d("getTask", "getTask: " + task);
         taskName = (TextView) view.findViewById(R.id.taskName);
         taskName.setText(task.name);
@@ -80,6 +90,8 @@ public class FragmentDescriptionTask extends Fragment {
 
         location = (TextView) view.findViewById(R.id.location);
         location.setText(task.location);
+
+
 
 
 

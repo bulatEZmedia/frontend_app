@@ -40,8 +40,8 @@ public class Register extends AppCompatActivity {
         editTextUsername = findViewById(R.id.username);
         editTextName = findViewById(R.id.name);
         editTextSurname = findViewById(R.id.surname);
-        editTextEmail = findViewById(R.id.email);
-        editTextPassword = findViewById(R.id.password);
+        editTextEmail = findViewById(R.id.editTextTextEmailAddress);
+        editTextPassword = findViewById(R.id.editTextTextPassword);
         Button register = findViewById(R.id.button3);
         mSettings = getSharedPreferences(APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
@@ -96,7 +96,7 @@ public class Register extends AppCompatActivity {
     }
 
     public void onClick(View v){
-            userSignUp();
+        userSignUp();
     }
 }
 

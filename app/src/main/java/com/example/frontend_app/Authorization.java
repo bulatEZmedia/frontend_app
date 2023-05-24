@@ -42,6 +42,13 @@ public class Authorization extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextTextPassword);
         button2 = findViewById(R.id.button2);
         mSettings = getSharedPreferences(APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        Button auth = findViewById(R.id.button4);
+        auth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     public void userSignIn(){

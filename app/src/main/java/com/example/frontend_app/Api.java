@@ -67,5 +67,27 @@ public interface Api {
                 @Query("userId") int userId
 
     );
+
+    @GET("check_status")
+    Call<Task> checkStatus(
+            @Query("taskId") int taskId
+    );
+
+    @POST("change_status")
+    Call<ResponseBody> change_status(
+            @Query("id_task") int taskId,
+            @Query("status") int status
+    );
+
+    @POST("check_ready_task")
+    Call<ResponseBody> check_ready_task(
+            @Query("taskId") int taskId
+    );
+
+    @POST("get_xp")
+    Call<ResponseBody> get_xp(
+            @Query("userId") int userId,
+            @Query("taskId") int taskId
+    );
 }
 

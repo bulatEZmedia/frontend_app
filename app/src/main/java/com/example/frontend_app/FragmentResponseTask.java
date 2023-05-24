@@ -47,7 +47,7 @@ public class FragmentResponseTask extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_response_task, container, false);
-        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        mSettings = getActivity().getSharedPreferences(APP_PREFERENCES_TASK, Context.MODE_PRIVATE);
         int userId = 0;
         int userIdAuth = 0;
 
@@ -89,7 +89,7 @@ public class FragmentResponseTask extends Fragment {
 
         Bundle bundle = this.getArguments();
         Task task = new Gson().fromJson(bundle.getString("task"), Task.class);
-        SharedPreferences.Editor editor = mSettings1.edit();
+        SharedPreferences.Editor editor = mSettings.edit();
         editor.putInt(APP_PREFERENCES_TASKID, task.id);
         editor.apply();
         retrofit2.Call<ResponseBody> call = RetrofitClient
@@ -103,6 +103,8 @@ public class FragmentResponseTask extends Fragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s = response.body().toString();
                 Toast.makeText(getActivity(), "Отправлено", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), MainPage.class);
+                startActivity(intent);
             }
 
 

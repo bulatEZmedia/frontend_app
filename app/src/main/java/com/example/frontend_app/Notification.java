@@ -89,6 +89,7 @@ public class Notification extends AppCompatActivity {
                     });
                 }
                 else if (task.getStatus() == 3){
+                    process.setText("Давай делай!");
                     begin.setText("Сдать");
                     begin.setOnClickListener(new View.OnClickListener() {
                         @Override

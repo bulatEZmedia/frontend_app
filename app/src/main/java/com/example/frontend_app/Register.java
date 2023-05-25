@@ -43,6 +43,12 @@ public class Register extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextTextEmailAddress);
         editTextPassword = findViewById(R.id.editTextTextPassword);
         Button register = findViewById(R.id.button3);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         mSettings = getSharedPreferences(APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
 
@@ -62,15 +68,21 @@ public class Register extends AppCompatActivity {
             public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 try {
                     int userId = Integer.parseInt(response.body().string());
-                    SharedPreferences.Editor editor = mSettings.edit();
-                    Log.d("TAG", "onResponse: " + response.body().string());
+                    if(userId != 0){
+                        SharedPreferences.Editor editor = mSettings.edit();
+                        Log.d("TAG", "onResponse: " + response.body().string());
 
-                    editor.putInt(APP_PREFERENCES_USERID, userId);
-                    editor.apply();
+                        editor.putInt(APP_PREFERENCES_USERID, userId);
+                        editor.apply();
 
-                    Intent intent1 = new Intent(Register.this, MainPage.class);
-                    startActivity(intent1);
-                    Toast.makeText(Register.this, "" + userId, Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(Register.this, MainPage.class);
+                        startActivity(intent1);
+                        Toast.makeText(Register.this, "" + userId, Toast.LENGTH_SHORT).show();
+
+                    }
+                    else{
+                        Toast.makeText(Register.this, "email is incorrect", Toast.LENGTH_SHORT).show();
+                    }
 
                 } catch (IOException e) {
                     throw new RuntimeException(e);
